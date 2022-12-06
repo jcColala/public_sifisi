@@ -16,7 +16,7 @@ define('LARAVEL_START', microtime(true));
 |
 */
 
-if (file_exists($maintenance = __DIR__.'/../public_proyectos/sifisi/storage/framework/maintenance.php')) {
+if (file_exists($maintenance = __DIR__.'/../public_project/sifisi/storage/framework/maintenance.php')) {
     require $maintenance;
 }
 
@@ -31,7 +31,7 @@ if (file_exists($maintenance = __DIR__.'/../public_proyectos/sifisi/storage/fram
 |
 */
 
-require __DIR__.'/../public_proyectos/sifisi/vendor/autoload.php';
+require __DIR__.'/../public_project/sifisi/vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +44,7 @@ require __DIR__.'/../public_proyectos/sifisi/vendor/autoload.php';
 |
 */
 
-$app = require_once __DIR__.'/../public_proyectos/sifisi/bootstrap/app.php';
+$app = require_once __DIR__.'/../public_project/sifisi/bootstrap/app.php';
 
 $kernel = $app->make(Kernel::class);
 
