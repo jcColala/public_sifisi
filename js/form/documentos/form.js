@@ -3,12 +3,12 @@ const text_icono = (e, obj, _key, _paht) => {
     set_icono(_key, valor, _paht)
 }
 
-form.register(_path_controller_proceso_cero, {
+form.register(_path_controller_documentos, {
     nuevo: function() {
-        get_modal(_path_controller_proceso_cero,_prefix_proceso_cero)
+        get_modal(_path_controller_documentos,_prefix_documentos)
     },
     editar: function(id) {
-        get_modal(_path_controller_proceso_cero, _prefix_proceso_cero, "edit", id)
+        get_modal(_path_controller_documentos, _prefix_documentos, "edit", id)
     },
     aprobar: function(id){
         var $self = this
@@ -18,7 +18,7 @@ form.register(_path_controller_proceso_cero, {
         swal({ title: "Confirmar", text: "¿Desea " + accion__ + " el registro seleccionado?", type: "warning", showCancelButton: !0, confirmButtonText: "Confirmar", cancelButtonText: "Cancelar" }, function() {
 
             $.ajax({
-                url: route(_path_controller_proceso_cero + '.destroy', 'aprobar'),
+                url: route(_path_controller_documentos + '.destroy', 'aprobar'),
                 data: { id: id, accion: accion__ },
                 type: 'DELETE',
                 beforeSend: function() {
@@ -65,20 +65,21 @@ form.register(_path_controller_proceso_cero, {
         swal({ title: "Confirmar", text: "¿Desea " + accion__ + " el registro seleccionado?", type: "warning", showCancelButton: !0, confirmButtonText: "Confirmar", cancelButtonText: "Cancelar" }, function() {
 
             $.ajax({
-                url: route(_path_controller_proceso_cero + '.destroy', 'delete'),
+                url: route(_path_controller_documentos + '.destroy', 'delete'),
                 data: { id: id, accion: accion__ },
                 type: 'DELETE',
                 beforeSend: function() {
-                    //loading();
+                    //LOADING PAGE
                 },
                 success: function(response) {
+                    //return console.log(response)
                     if(response.type == "error"){
                         toastr.error(response.text)
                         $self.callback(response)
-                        return close_modal(_path_controller_proceso_cero)
+                        return init_btndelete()
                     }
                     
-                    toastr.success('Registro ' + textaccion__ + ' correctamente', 'Notificación Procesos Nivel 0')
+                    toastr.success('Registro ' + textaccion__ + ' correctamente')
                     $self.callback(response)
                     init_btndelete()
                 },
@@ -89,7 +90,7 @@ form.register(_path_controller_proceso_cero, {
                     if (e.status == 422) { //Errores de Validacion
                         $.each(e.responseJSON.errors, function(i, item) {
                             if (i == 'referencias') {
-                                toastr.warning(item, 'Notificación Proceso Nivel Cero')
+                                toastr.warning(item, 'Notificación documentoses')
                             }
 
                         });
@@ -106,28 +107,42 @@ form.register(_path_controller_proceso_cero, {
     },
     guardar: function() {
         var $self = this;
-        let _form = "#form-" + _path_controller_proceso_cero
-        let post_data = $(_form).serialize()
+        let _form = "#form-" + _path_controller_documentos
+        var formData = new FormData();
+        formData.append('id', $('#id_').val());
+        formData.append('idpersona_solicita', $('#idpersona_solicita_').val());
+        formData.append('codigo', $('#codigo_').val());
+        formData.append('descripcion', $('#descripcion_').val());
+        formData.append('version', $('#version_').val());
+        formData.append('fecha_emision', $('#fecha_emision_').val());
+        formData.append('fecha_aprobacion', $('#fecha_aprobacion_').val());
+        formData.append('ubicacion_fisica', $('#ubicacion_fisica_').val());
+        formData.append('idtipo_documento', $('#idtipo_documento_').val());
+        formData.append('identidad', $('#identidad_').val());
+        formData.append('idresolucion', $('#idresolucion_').val());
+        formData.append('porcentaje', $('#porcentaje_').val());
+        formData.append('archivo', $('#archivo_')[0].files[0]);
 
         $.ajax({
-            url: route(_path_controller_proceso_cero + '.store'),
+            url: route(_path_controller_documentos + '.store'),
             type: 'POST',
-            data: post_data,
+            data: formData,
             cache: false,
+            contentType: false,
             processData: false,
             beforeSend: function() {
                 //loading();
             },
             success: function(response) {
-                //toastr.success('Datos grabados correctamente','Notificación '+_path_controller_proceso_cero, {"timeOut":500000,"tapToDismiss": false})}
                 if(response.type == "error"){
-                    toastr.error(response.text)
+                    toastr.error(response.text, '')
                     $self.callback(response)
-                    return close_modal(_path_controller_proceso_cero)
+                    return close_modal(_path_controller_documentos)
                 }
-                toastr.success('Datos grabados correctamente', 'Notificación Procesos Nivel Cero')
+                //toastr.success('Datos grabados correctamente','Notificación '+_path_controller_documentos, {"timeOut":500000,"tapToDismiss": false})
+                toastr.success('Datos grabados correctamente', '')
                 $self.callback(response)
-                close_modal(_path_controller_proceso_cero)
+                close_modal(_path_controller_documentos)
             },
             complete: function() {
                 //loading("complete");
@@ -136,15 +151,15 @@ form.register(_path_controller_proceso_cero, {
 
                 //Msj($("#descripcion"), "Ingrese Descripcion ","","above",false)
                 if (e.status == 422) { //Errores de Validacion
-                    limpieza(_path_controller_proceso_cero);
+                    limpieza(_path_controller_documentos);
                     $.each(e.responseJSON.errors, function(i, item) {
-                        $('#' + i+"_"+_prefix_proceso_cero).addClass('is_invalid');
-                        $('.' + i+"_"+_prefix_proceso_cero).removeClass('d-none');
-                        $('.' + i+"_"+_prefix_proceso_cero).attr('data-content', item);
-                        $('.' + i+"_"+_prefix_proceso_cero).addClass('msj_error_exist');
+                        $('#' + i+"_"+_prefix_documentos).addClass('is_invalid');
+                        $('.' + i+"_"+_prefix_documentos).removeClass('d-none');
+                        $('.' + i+"_"+_prefix_documentos).attr('data-content', item);
+                        $('.' + i+"_"+_prefix_documentos).addClass('msj_error_exist');
 
                     });
-                    $("#form-" + _path_controller_proceso_cero + " .msj_error_exist").first().popover('show');
+                    $("#form-" + _path_controller_documentos + " .msj_error_exist").first().popover('show');
 
 
                 } else if (e.status == 419) {
@@ -157,6 +172,6 @@ form.register(_path_controller_proceso_cero, {
 
     },
     callback: function(data) {
-        grilla.reload(_path_controller_proceso_cero);
+        grilla.reload(_path_controller_documentos);
     }
 });

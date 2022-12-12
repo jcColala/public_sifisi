@@ -24,22 +24,22 @@ const load_datatable = () => {
             },
             {
                 data: 'descripcion',
-                orderable: false,
+                orderable: true,
                 searchable: true
             },
             {
                 data: 'cant_integrantes',
-                orderable: false,
+                orderable: true,
                 searchable: true
             },
             {
                 data: 'tipo_accion.descripcion',
-                orderable: false,
+                orderable: true,
                 searchable: true
             },
             {
                 data: 'estado.descripcion',
-                orderable: false,
+                orderable: true,
                 searchable: true
             },
 
@@ -55,12 +55,13 @@ const load_datatable = () => {
     }).DataTable();
 }
 
-//------------------------------------------------------------- IR
-$("#btn-ir").on("click", function(e){
+//----------------------------------------------------------APROBAR
+$("#btn-aprobar").on("click", function(e){
     e.preventDefault();
     var id = grilla.get_id(_name_tabla_entidad);
+
     if (id != null) {
-        window.location.href ='proceso_uno/'+id;
+        form.get(_path_controller_entidad).aprobar(id, this);
     } else {
         alertas.warning("Ups..!");
     }

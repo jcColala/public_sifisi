@@ -24,16 +24,27 @@ const load_datatable = () => {
             },
             {
                 data: 'codigo',
-                name: 'codigo',
-                searchable: true
-            },
-            {
-                data: 'descripcion',
                 orderable: false,
                 searchable: true
             },
             {
-                data: 'estado',
+                data: 'descripcion',
+                orderable: true,
+                searchable: true
+            },
+            {
+                data: 'proceso_uno.descripcion',
+                orderable: false,
+                searchable: true,
+            },
+            {
+                data: 'tipo_accion.descripcion',
+                orderable: true,
+                searchable: true,
+                className: "text-center"
+            },
+            {
+                data: 'estado.descripcion',
                 orderable: false,
                 searchable: true,
                 className: "text-center"
@@ -51,19 +62,20 @@ const load_datatable = () => {
     }).DataTable();
 }
 
-//------------------------------------------------------------- IR
-$("#btn-ir").on("click", function(e){
+//----------------------------------------------------------APROBAR
+$("#btn-aprobar").on("click", function(e){
     e.preventDefault();
     var id = grilla.get_id(_name_tabla_indicador);
+
     if (id != null) {
-        window.location.href ='ver_indicador/'+id;
+        form.get(_path_controller_indicador).aprobar(id, this);
     } else {
         alertas.warning("Ups..!");
     }
 });
 
 //------------------------------------------------------------- Nuevo
-$("#btn-new").on("click", function(e) {
+$("#btn-create").on("click", function(e) {
     e.preventDefault();
     form.get(_path_controller_indicador).nuevo();
 });
@@ -80,13 +92,9 @@ $("#btn-edit").on("click", function(e) {
     }
 });
 
-$("#form-indicador").on("submit", function(e){
-    e.preventDefault();
-    alert('A la mrda');
-});
 
 //------------------------------------------------------------- Eliminar
-$("#btn-delete_restore").on("click", function(e) {
+$("#btn-destroy").on("click", function(e) {
     e.preventDefault();
     var id = grilla.get_id(_name_tabla_indicador);
     if (id != null) {
@@ -95,3 +103,4 @@ $("#btn-delete_restore").on("click", function(e) {
         alertas.warning("Ups..!");
     }
 });
+

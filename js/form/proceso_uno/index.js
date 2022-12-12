@@ -57,6 +57,18 @@ const load_datatable = () => {
     }).DataTable();
 }
 
+//------------------------------------------------------- PROCESO UNO
+$("#btn-aprobar").on("click", function(e){
+    e.preventDefault();
+    var id = grilla.get_id(_name_tabla_proceso_uno);
+
+    if (id != null) {
+        form.get(_path_controller_proceso_uno).aprobar(id, this);
+    } else {
+        alertas.warning("Ups..!");
+    }
+});
+
 //------------------------------------------------------------- IR
 $("#btn-ir").on("click", function(e){
     e.preventDefault();

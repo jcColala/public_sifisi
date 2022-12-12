@@ -3,12 +3,12 @@ const text_icono = (e, obj, _key, _paht) => {
     set_icono(_key, valor, _paht)
 }
 
-form.register(_path_controller_proceso_cero, {
+form.register(_path_controller_resoluciones, {
     nuevo: function() {
-        get_modal(_path_controller_proceso_cero,_prefix_proceso_cero)
+        get_modal(_path_controller_resoluciones,_prefix_resoluciones)
     },
     editar: function(id) {
-        get_modal(_path_controller_proceso_cero, _prefix_proceso_cero, "edit", id)
+        get_modal(_path_controller_resoluciones, _prefix_resoluciones, "edit", id)
     },
     aprobar: function(id){
         var $self = this
@@ -16,11 +16,10 @@ form.register(_path_controller_proceso_cero, {
         let textaccion__ = (accion__.substring(0, 7)) + 'ado'
 
         swal({ title: "Confirmar", text: "¿Desea " + accion__ + " el registro seleccionado?", type: "warning", showCancelButton: !0, confirmButtonText: "Confirmar", cancelButtonText: "Cancelar" }, function() {
-
             $.ajax({
-                url: route(_path_controller_proceso_cero + '.destroy', 'aprobar'),
+                url: route(_path_controller_resoluciones + '.aprobar'),
                 data: { id: id, accion: accion__ },
-                type: 'DELETE',
+                type: 'POST',
                 beforeSend: function() {
                     //LOADING PAGE
                 },
@@ -65,7 +64,7 @@ form.register(_path_controller_proceso_cero, {
         swal({ title: "Confirmar", text: "¿Desea " + accion__ + " el registro seleccionado?", type: "warning", showCancelButton: !0, confirmButtonText: "Confirmar", cancelButtonText: "Cancelar" }, function() {
 
             $.ajax({
-                url: route(_path_controller_proceso_cero + '.destroy', 'delete'),
+                url: route(_path_controller_resoluciones + '.destroy', 'delete'),
                 data: { id: id, accion: accion__ },
                 type: 'DELETE',
                 beforeSend: function() {
@@ -75,7 +74,7 @@ form.register(_path_controller_proceso_cero, {
                     if(response.type == "error"){
                         toastr.error(response.text)
                         $self.callback(response)
-                        return close_modal(_path_controller_proceso_cero)
+                        return close_modal(_path_controller_resoluciones)
                     }
                     
                     toastr.success('Registro ' + textaccion__ + ' correctamente', 'Notificación Procesos Nivel 0')
@@ -106,28 +105,33 @@ form.register(_path_controller_proceso_cero, {
     },
     guardar: function() {
         var $self = this;
-        let _form = "#form-" + _path_controller_proceso_cero
-        let post_data = $(_form).serialize()
-
+        let _form = "#form-" + _path_controller_resoluciones
+        var formData = new FormData();
+        formData.append('id', $('#id_').val());
+        formData.append('idpersona_solicita', $('#idpersona_solicita_').val());
+        formData.append('codigo', $('#codigo_').val());
+        formData.append('descripcion', $('#descripcion_').val());
+        formData.append('archivo', $('#archivo_')[0].files[0]);
         $.ajax({
-            url: route(_path_controller_proceso_cero + '.store'),
+            url: route(_path_controller_resoluciones + '.store'),
             type: 'POST',
-            data: post_data,
+            data: formData,
             cache: false,
+            contentType: false,
             processData: false,
             beforeSend: function() {
                 //loading();
             },
             success: function(response) {
-                //toastr.success('Datos grabados correctamente','Notificación '+_path_controller_proceso_cero, {"timeOut":500000,"tapToDismiss": false})}
+                //toastr.success('Datos grabados correctamente','Notificación '+_path_controller_resoluciones, {"timeOut":500000,"tapToDismiss": false})}
                 if(response.type == "error"){
                     toastr.error(response.text)
                     $self.callback(response)
-                    return close_modal(_path_controller_proceso_cero)
+                    return close_modal(_path_controller_resoluciones)
                 }
                 toastr.success('Datos grabados correctamente', 'Notificación Procesos Nivel Cero')
                 $self.callback(response)
-                close_modal(_path_controller_proceso_cero)
+                close_modal(_path_controller_resoluciones)
             },
             complete: function() {
                 //loading("complete");
@@ -136,15 +140,15 @@ form.register(_path_controller_proceso_cero, {
 
                 //Msj($("#descripcion"), "Ingrese Descripcion ","","above",false)
                 if (e.status == 422) { //Errores de Validacion
-                    limpieza(_path_controller_proceso_cero);
+                    limpieza(_path_controller_resoluciones);
                     $.each(e.responseJSON.errors, function(i, item) {
-                        $('#' + i+"_"+_prefix_proceso_cero).addClass('is_invalid');
-                        $('.' + i+"_"+_prefix_proceso_cero).removeClass('d-none');
-                        $('.' + i+"_"+_prefix_proceso_cero).attr('data-content', item);
-                        $('.' + i+"_"+_prefix_proceso_cero).addClass('msj_error_exist');
+                        $('#' + i+"_"+_prefix_resoluciones).addClass('is_invalid');
+                        $('.' + i+"_"+_prefix_resoluciones).removeClass('d-none');
+                        $('.' + i+"_"+_prefix_resoluciones).attr('data-content', item);
+                        $('.' + i+"_"+_prefix_resoluciones).addClass('msj_error_exist');
 
                     });
-                    $("#form-" + _path_controller_proceso_cero + " .msj_error_exist").first().popover('show');
+                    $("#form-" + _path_controller_resoluciones + " .msj_error_exist").first().popover('show');
 
 
                 } else if (e.status == 419) {
@@ -157,6 +161,6 @@ form.register(_path_controller_proceso_cero, {
 
     },
     callback: function(data) {
-        grilla.reload(_path_controller_proceso_cero);
+        grilla.reload(_path_controller_resoluciones);
     }
 });

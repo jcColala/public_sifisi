@@ -10,6 +10,53 @@ form.register(_path_controller_proceso_uno, {
     editar: function(id) {
         get_modal(_path_controller_proceso_uno, _prefix_proceso_uno, "edit", id)
     },
+    aprobar: function(id){
+        var $self = this
+        let accion__ = 'aprobar'
+        let textaccion__ = (accion__.substring(0, 7)) + 'ado'
+
+        swal({ title: "Confirmar", text: "¿Desea " + accion__ + " el registro seleccionado?", type: "warning", showCancelButton: !0, confirmButtonText: "Confirmar", cancelButtonText: "Cancelar" }, function() {
+
+            $.ajax({
+                url: route(_path_controller_proceso_uno + '.destroy', 'aprobar'),
+                data: { id: id, accion: accion__ },
+                type: 'DELETE',
+                beforeSend: function() {
+                    //LOADING PAGE
+                },
+                success: function(response) {
+                    //return console.log(response)
+                    if(response.type == "error"){
+                        toastr.error(response.text)
+                        $self.callback(response)
+                        return init_btndelete()
+                    }
+                    
+                    toastr.success('Registro ' + textaccion__ + ' correctamente')
+                    $self.callback(response)
+                    init_btndelete()
+                },
+                complete: function() {
+                    //loading("complete");
+                },
+                error: function(e) {
+                    if (e.status == 422) { //Errores de Validacion
+                        $.each(e.responseJSON.errors, function(i, item) {
+                            if (i == 'referencias') {
+                                toastr.warning(item, 'Notificación tipo_procesoes')
+                            }
+
+                        });
+                    }
+                    if (e.status == 419) { //Errores de Sesión
+                        console.log(msj_sesion);
+                    } else if (e.status == 500) {
+                        console.log((e.responseJSON.message) ? msj_soporte : ' ');
+                    }
+                }
+            })
+        })
+    },
     eliminar_restaurar: function(id, obj) {
         var $self = this
         let accion__ = obj.getAttribute('data-action')
