@@ -25,6 +25,23 @@ function guardar_accesos(e) {
     __jstree.find('li').each(function(i, element) {
         var link = $(element).find('a.jstree-anchor')
         var __id = this.id.split('-')
+        if (__id[0] == 'm' & __id[2] != '') {
+            if ($(element).attr("aria-selected")) {
+                if ($(element).attr("aria-selected").toString() == 'true') {
+                    cont_true++
+                    post_data.append("accesos_true_modulos[" + cont_true + "][id]", this.id)
+                } else {
+                    cont_false++
+                    post_data.append("accesos_false_modulos[" + cont_false + "][id]", this.id)
+                }
+            } else if ($(link).attr("aria-selected").toString() == 'true') {
+                cont_true++
+                post_data.append("accesos_true_modulos[" + cont_true + "][id]", this.id)
+            } else {
+                cont_false++
+                post_data.append("accesos_false_modulos[" + cont_false + "][id]", this.id)
+            }
+        }
         if (__id[0] == 'f') {
             if ($(element).attr("aria-selected")) {
                 if ($(element).attr("aria-selected").toString() == 'true') {
