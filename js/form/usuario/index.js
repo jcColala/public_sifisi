@@ -84,3 +84,15 @@ $("#btn-destroy").on("click", function(e) {
         alertas.warning("Ups..!");
     }
 });
+
+//----------------------------------------------------------- Resetear
+$("#btn-reset").on("click", function(e) {
+    e.preventDefault();
+    var id = grilla.get_id(_name_tabla_usuario);
+
+    if (id != null) {
+        form.get(_path_controller_usuario).reset(id);
+    } else {
+        alertas.warning("Ups..!");
+    }
+});

@@ -36,6 +36,8 @@ function init() {
             $("#" + key + "_" + _prefix_usuario, "#form-" + _path_controller_usuario).val(val)
         }
     })
+    if (reset_true == true)
+        return false
     $("#password_" + _prefix_usuario, "#form-" + _path_controller_usuario).val("******")
     $("#password_confirmation_" + _prefix_usuario, "#form-" + _path_controller_usuario).val("******")
     $("#password_" + _prefix_usuario, "#form-" + _path_controller_usuario).attr("disabled", true)
@@ -89,20 +91,17 @@ if ($("#autocomplete").length) {
           </li>`
         },
 
-        getResultValue: result => result.apellido_paterno+' '+result.apellido_materno+' '+result.nombres,
+        getResultValue: result => result.apellido_paterno + ' ' + result.apellido_materno + ' ' + result.nombres,
         onSubmit: result => {
-            $("#idpersona_"+_prefix_usuario).val(result.id)
+            $("#idpersona_" + _prefix_usuario).val(result.id)
         }
     })
 }
 
 //------------------------------------------------------------- Guardar editar y eliminar
 form.register(_path_controller_usuario, {
-    nuevo: function() {
-        get_modal(_path_controller_usuario, _prefix_usuario)
-    },
-    editar: function(id) {
-        get_modal(_path_controller_usuario, _prefix_usuario, "edit", id)
+    reset: function(id) {
+        get_modal(_path_controller_usuario, _prefix_usuario, "reset", id, "_reset")
     },
     eliminar_restaurar: function(id, obj) {
         var $self = this
@@ -172,6 +171,53 @@ form.register(_path_controller_usuario, {
                         if (i == 'idpersona') {
                             $("#persona_nombres_" + _prefix_usuario).addClass('is_invalid');
                         }
+                        $('#' + i + "_" + _prefix_usuario).addClass('is_invalid');
+                        $('.select2-' + i + "_" + _prefix_usuario).addClass('select2-is_invalid');
+                        $('.' + i + "_" + _prefix_usuario).removeClass('d-none');
+                        $('.' + i + "_" + _prefix_usuario).attr('data-content', item);
+                        $('.' + i + "_" + _prefix_usuario).addClass('msj_error_exist');
+
+                    });
+                    $("#form-" + _path_controller_usuario + " .msj_error_exist").first().popover('show');
+
+
+                } else {
+                    mostrar_errores_externos(e)
+                }
+
+            }
+        })
+
+    },
+    guardar_reset: function() {
+        var $self = this;
+        let _form = "#form-" + _path_controller_usuario
+        let post_data = new FormData($(_form)[0]);
+
+        $.ajax({
+            url: route(_path_controller_usuario + '.store_reset'),
+            type: 'POST',
+            data: post_data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function() {
+                //loading();
+            },
+            success: function(response) {
+                toastr.success('Datos grabados correctamente', 'Notificación módulo ' + _path_controller_usuario)
+                $self.callback(response)
+                close_modal(_path_controller_usuario + "_reset")
+            },
+            complete: function() {
+                //loading("complete");
+            },
+            error: function(e) {
+                if (e.status == 422) { //Errores de Validacion
+                    limpieza(_path_controller_usuario);
+                    $.each(e.responseJSON.errors, function(i, item) {
+                        if (i == 'usuario_required')
+                            toastr.warning(item, 'Notificación ' + _path_controller_usuario)
                         $('#' + i + "_" + _prefix_usuario).addClass('is_invalid');
                         $('.select2-' + i + "_" + _prefix_usuario).addClass('select2-is_invalid');
                         $('.' + i + "_" + _prefix_usuario).removeClass('d-none');

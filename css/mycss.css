@@ -9,6 +9,16 @@
     cursor: pointer;
     color: #76839a !important;
 }
+.pdd_0{
+    padding:0 15px 0 15px !important;
+}
+input:disabled{
+    cursor: not-allowed;
+    color: #a1a0a0;
+}
+.form_strong{
+    font-size: 15px;
+}
 .mw-2em{
     min-width: 2em;
 }

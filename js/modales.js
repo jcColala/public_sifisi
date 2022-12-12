@@ -69,7 +69,7 @@ $(".databale").on('click', 'tr', function(e) {
         //selecionar el estado
         if (document.querySelectorAll(btn_el_rest).length && table.row(this).data() != undefined) {
             $(btn_el_rest).attr("class", "")
-            if(table.row(this).data()["editable"] != undefined){
+            if (table.row(this).data()["editable"] != undefined) {
                 if (!table.row(this).data()["editable"]) {
                     setTimeout(function() { table.$('tr.selected').removeClass('selected') }, 600)
                     init_btndelete()
@@ -220,10 +220,12 @@ var form = function() {
 
 
 //------------------------------------------------------------- Abrir modal
-const get_modal = (_paht, _prefix, funcion = "create", id = null) => {
+const get_modal = (_paht, _prefix, funcion = "create", id = null, extra = null) => {
+    var _ruta = _paht
+    _paht = (extra == null) ? _paht : _paht + extra
 
     $.ajax({
-        url: route(_paht + "." + funcion, id),
+        url: route(_ruta + "." + funcion, id),
         type: 'GET',
         cache: false,
         contentType: false,
@@ -263,11 +265,21 @@ const get_modal = (_paht, _prefix, funcion = "create", id = null) => {
 const close_modal = (_paht) => {
     $("#md-" + _paht).modal("hide")
 }
+
 //------------------------------------------------------------- Acciones modal
 const md_guardar = (e, obj) => {
     e.preventDefault()
     let accion = ($("#" + obj).attr('data-acciones')).split('-')
-    form.get(accion[1]).guardar()
+
+    switch (accion[0]) {
+        case "guardar_reset":
+            form.get(accion[1]).guardar_reset()
+            break
+
+        default:
+            form.get(accion[1]).guardar()
+            break
+    }
 }
 
 //------------------------------------------------------------- Selec icono
