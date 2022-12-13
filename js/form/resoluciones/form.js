@@ -10,6 +10,10 @@ form.register(_path_controller_resoluciones, {
     editar: function(id) {
         get_modal(_path_controller_resoluciones, _prefix_resoluciones, "edit", id)
     },
+    ver: function(id) {
+        get_modal(_path_controller_resoluciones, _prefix_resoluciones, "ver", id)
+        
+    },
     aprobar: function(id){
         var $self = this
         let accion__ = 'aprobar'

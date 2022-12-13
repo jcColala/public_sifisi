@@ -10,17 +10,20 @@ form.register(_path_controller_proceso_uno, {
     editar: function(id) {
         get_modal(_path_controller_proceso_uno, _prefix_proceso_uno, "edit", id)
     },
+    ver: function(id) {
+        get_modal(_path_controller_proceso_uno, _prefix_proceso_uno, "ver", id)
+        
+    },
     aprobar: function(id){
         var $self = this
         let accion__ = 'aprobar'
         let textaccion__ = (accion__.substring(0, 7)) + 'ado'
 
         swal({ title: "Confirmar", text: "¿Desea " + accion__ + " el registro seleccionado?", type: "warning", showCancelButton: !0, confirmButtonText: "Confirmar", cancelButtonText: "Cancelar" }, function() {
-
             $.ajax({
-                url: route(_path_controller_proceso_uno + '.destroy', 'aprobar'),
+                url: route(_path_controller_proceso_uno + '.aprobar'),
                 data: { id: id, accion: accion__ },
-                type: 'DELETE',
+                type: 'POST',
                 beforeSend: function() {
                     //LOADING PAGE
                 },
@@ -43,7 +46,7 @@ form.register(_path_controller_proceso_uno, {
                     if (e.status == 422) { //Errores de Validacion
                         $.each(e.responseJSON.errors, function(i, item) {
                             if (i == 'referencias') {
-                                toastr.warning(item, 'Notificación tipo_procesoes')
+                                toastr.warning(item, 'Notificación Entidades')
                             }
 
                         });

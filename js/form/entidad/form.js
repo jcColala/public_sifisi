@@ -10,17 +10,20 @@ form.register(_path_controller_entidad, {
     editar: function(id) {
         get_modal(_path_controller_entidad, _prefix_entidad, "edit", id)
     },
+    ver: function(id) {
+        get_modal(_path_controller_entidad, _prefix_entidad, "ver", id)
+        
+    },
     aprobar: function(id){
         var $self = this
         let accion__ = 'aprobar'
         let textaccion__ = (accion__.substring(0, 7)) + 'ado'
 
         swal({ title: "Confirmar", text: "¿Desea " + accion__ + " el registro seleccionado?", type: "warning", showCancelButton: !0, confirmButtonText: "Confirmar", cancelButtonText: "Cancelar" }, function() {
-
             $.ajax({
-                url: route(_path_controller_entidad + '.destroy', 'aprobar'),
+                url: route(_path_controller_entidad + '.aprobar'),
                 data: { id: id, accion: accion__ },
-                type: 'DELETE',
+                type: 'POST',
                 beforeSend: function() {
                     //LOADING PAGE
                 },

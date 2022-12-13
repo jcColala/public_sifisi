@@ -54,16 +54,29 @@ const load_datatable = () => {
         console.log('error ajax: ', message);
     }).DataTable();
 }
-    $("#btn-aprobar").on("click", function(e){
-        e.preventDefault();
-        var id = grilla.get_id(_name_tabla_proceso_cero);
+//------------------------------------------------------- VER
+$("#btn-ver").on("click", function(e){
+    e.preventDefault();
+    var id = grilla.get_id(_name_tabla_proceso_cero);
 
-        if (id != null) {
-            form.get(_path_controller_proceso_cero).aprobar(id, this);
-        } else {
-            alertas.warning("Ups..!");
-        }
-    });
+    if (id != null) {
+        form.get(_path_controller_proceso_cero).ver(id, this);
+    } else {
+        alertas.warning("Ups..!");
+    }
+});
+
+//-----------------------------------------------------APROBAR
+$("#btn-aprobar").on("click", function(e){
+    e.preventDefault();
+    var id = grilla.get_id(_name_tabla_proceso_cero);
+
+    if (id != null) {
+        form.get(_path_controller_proceso_cero).aprobar(id, this);
+    } else {
+        alertas.warning("Ups..!");
+    }
+});
 
 //------------------------------------------------------------- Nuevo
 $("#btn-create").on("click", function(e) {

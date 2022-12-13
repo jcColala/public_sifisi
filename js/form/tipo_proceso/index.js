@@ -55,6 +55,20 @@ const load_datatable = () => {
     }).DataTable();
 }
 
+//------------------------------------------------------- VER
+$("#btn-ver").on("click", function(e){
+    e.preventDefault();
+    var id = grilla.get_id(_name_tabla_tipo_proceso);
+
+    if (id != null) {
+        form.get(_path_controller_tipo_proceso).ver(id, this);
+    } else {
+        alertas.warning("Ups..!");
+    }
+});
+
+
+//------------------------------------------------------- APROBAR
 $("#btn-aprobar").on("click", function(e){
     e.preventDefault();
     var id = grilla.get_id(_name_tabla_tipo_proceso);
