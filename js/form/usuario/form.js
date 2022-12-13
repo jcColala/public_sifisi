@@ -93,6 +93,8 @@ if ($("#autocomplete").length) {
 
         getResultValue: result => result.apellido_paterno + ' ' + result.apellido_materno + ' ' + result.nombres,
         onSubmit: result => {
+            var evento = window.event || event
+            evento.preventDefault()
             $("#idpersona_" + _prefix_usuario).val(result.id)
         }
     })
