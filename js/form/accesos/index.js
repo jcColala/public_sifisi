@@ -9,8 +9,8 @@ $(".div-select2").on("click", function(e) {
 if (localStorage.getItem("accesos")) {
     var datos = localStorage.getItem("accesos").split('-')
     $("#idmodulo_padre_" + _prefix_accesos).val(datos[1])
-    $("#idperfil_" + _prefix_accesos).val(datos[2])
-    $("#idrol_" + _prefix_accesos).val(datos[3])
+    //$("#idperfil_" + _prefix_accesos).val(datos[2])
+    $("#idrol_" + _prefix_accesos).val(datos[2])
     toastr.success(datos[0], 'Notificación módulo' + _path_controller_accesos)
     setTimeout(deletemsj_localstore("accesos"),100);
 }
@@ -56,7 +56,8 @@ function guardar_accesos(e) {
             //loading();
         },
         success: function(response) {
-            localStorage.accesos = "Datos grabados correctamente-" + $("#idmodulo_padre_" + _prefix_accesos).val() + "-" + $("#idperfil_" + _prefix_accesos).val() + "-" + $("#idrol_" + _prefix_accesos).val()
+            //localStorage.accesos = "Datos grabados correctamente-" + $("#idmodulo_padre_" + _prefix_accesos).val() + "-" + $("#idperfil_" + _prefix_accesos).val() + "-" + $("#idrol_" + _prefix_accesos).val()
+            localStorage.accesos = "Datos grabados correctamente-" + $("#idmodulo_padre_" + _prefix_accesos).val() + "-" + $("#idrol_" + _prefix_accesos).val()
             location.reload();
         },
         complete: function() {
@@ -102,7 +103,7 @@ function armar_jstree(e) {
             'data': {
                 'url': route(_path_controller_accesos + '.acceso', {
                     idmodulo_padre: $("#idmodulo_padre_" + _prefix_accesos).val(),
-                    idperfil: $("#idperfil_" + _prefix_accesos).val(),
+                    //idperfil: $("#idperfil_" + _prefix_accesos).val(),
                     idrol: $("#idrol_" + _prefix_accesos).val()
                 }),
                 'data': function(node) {

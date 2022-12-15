@@ -16,7 +16,7 @@ $(".div-select2").on("click", function(e) {
 //------------------------------------------------------------- Init
 function init() {
     $.each(data_form, function(key, val) {
-        if (key == 'avatar') {
+        if (key == 'avatar' && reset_true != true) {
             if (val != null) {
 
                 var imagen_url = data_form.path_file + val
@@ -139,6 +139,8 @@ form.register(_path_controller_usuario, {
         var $self = this;
         let _form = "#form-" + _path_controller_usuario
         let post_data = new FormData($(_form)[0]);
+        post_data.delete('password');
+        //for (var pair of post_data.entries()) {console.log(pair[0]+ ', ' + pair[1]);} return false
 
         $.ajax({
             url: route(_path_controller_usuario + '.store'),
