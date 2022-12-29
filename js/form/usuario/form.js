@@ -139,7 +139,9 @@ form.register(_path_controller_usuario, {
         var $self = this;
         let _form = "#form-" + _path_controller_usuario
         let post_data = new FormData($(_form)[0]);
-        post_data.delete('password');
+        if (($("#id_"+_prefix_usuario).val()).length != 0)
+            post_data.delete('password')
+
         //for (var pair of post_data.entries()) {console.log(pair[0]+ ', ' + pair[1]);} return false
 
         $.ajax({

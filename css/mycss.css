@@ -333,5 +333,5 @@ table.dataTable tbody tr.selected {
 
 .wiki-snippet {
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.54);
+  color: var(--color_principal);
 }

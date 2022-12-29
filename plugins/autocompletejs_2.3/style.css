@@ -48,8 +48,9 @@
 }
 
 .autocomplete-result-list {
+    transform: translateY(-3px);
     margin: 0;
-    border: 1px solid rgba(0, 0, 0, .12);
+    border: 1px solid var(--color_principal);
     padding: 0;
     box-sizing: border-box;
     max-height: 296px;

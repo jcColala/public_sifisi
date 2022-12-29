@@ -1,0 +1,112 @@
+.mrginput100 input {
+    flex-direction: column;
+}
+
+.focus-input100 {
+    position: absolute;
+    text-transform: none;
+    background: #f1f1f900;
+    padding: 0px 2px 0px 2px !important;
+    overflow: hidden;
+    margin: 0px;
+    top: 0%;
+    left: 0%;
+    font-size: 14px;
+    -webkit-text-fill-color: #76839a;
+    transform: translate(39px, 9px);
+    height: 15px;
+    width: auto;
+    border-radius: 2px;
+    -webkit-transition: transform .5s, margin .5s ease, font-size .2s ease, -webkit-text-fill-color .4s ease, z-index .5s ease;
+    -moz-transition: transform .5s, margin .5s ease, font-size .2s ease, -webkit-text-fill-color .4s ease, z-index .5s ease;
+    -ms-transition: transform .5s, margin .5s ease, font-size .2s ease, -webkit-text-fill-color .4s ease, z-index .5s ease;
+    -o-transition: transform .5s, margin .5s ease, font-size .2s ease, -webkit-text-fill-color .4s ease, z-index .5s ease;
+    transition: transform .5s, margin .5s ease, font-size .2s ease, -webkit-text-fill-color .4s ease, z-index .5s ease;
+}
+
+.mrginput100_form .focus-input100 {
+    transform: translate(51px, 9px);
+    -webkit-transition: transform .4s, margin .4s ease, font-size .2s ease, -webkit-text-fill-color .4s ease, z-index .2s ease;
+    -moz-transition: transform .4s, margin .4s ease, font-size .2s ease, -webkit-text-fill-color .4s ease, z-index .2s ease;
+    -ms-transition: transform .4s, margin .4s ease, font-size .2s ease, -webkit-text-fill-color .4s ease, z-index .2s ease;
+    -o-transition: transform .4s, margin .4s ease, font-size .2s ease, -webkit-text-fill-color .4s ease, z-index .2s ease;
+    transition: transform .4s, margin .4s ease, font-size .2s ease, -webkit-text-fill-color .4s ease, z-index .2s ease;
+}
+
+/*.mrginput100_form .select_input100 {
+    transform: translate(14px, 9px);
+    -webkit-transition: transform .6s, margin .5s ease, font-size .2s ease, -webkit-text-fill-color .4s ease, z-index .3s ease;
+    -moz-transition: transform .6s, margin .5s ease, font-size .2s ease, -webkit-text-fill-color .4s ease, z-index .3s ease;
+    -ms-transition: transform .6s, margin .5s ease, font-size .2s ease, -webkit-text-fill-color .4s ease, z-index .3s ease;
+    -o-transition: transform .6s, margin .5s ease, font-size .2s ease, -webkit-text-fill-color .4s ease, z-index .3s ease;
+    transition: transform .6s, margin .5s ease, font-size .2s ease, -webkit-text-fill-color .4s ease, z-index .3s ease;
+}*/
+
+/*  focus y open los campos */
+.mrginput100 input:focus~.focus-input100 {
+    transform: translate(-10px, -10px);
+    margin: 0 0px 0 20px;
+    font-size: 12px;
+    background: linear-gradient(to bottom, #ffffff00 60%, #f1f1f9ed 40%);
+    -webkit-text-fill-color: var(--color_principal);
+    z-index: 1;
+}
+.dark-mode .mrginput100 input:focus~.focus-input100 {
+    background: linear-gradient(to bottom, #ffffff00 60%, #272740 40%);
+}
+
+.mrginput100_form input:focus~.focus-input100 {
+    transform: translate(25px, -9px);
+    margin: 0 0px 0 20px;
+    font-size: 12px;
+    background: linear-gradient(to bottom, #ffffff00 60%, #f1f1f9ed 40%);
+    -webkit-text-fill-color: var(--color_principal);
+    z-index: 3;
+}
+.dark-mode .mrginput100_form input:focus~.focus-input100 {
+    background: linear-gradient(to bottom, #ffffff00 60%, #272740 40%);
+}
+
+.mrginput100_form .select2-container--open~.focus-input100 {
+    transform: translate(-10px, -10px);
+    margin: 0 0px 0 20px;
+    font-size: 12px;
+    background: linear-gradient(to bottom, #ffffff00 60%, #f1f1f9ed 40%);
+    -webkit-text-fill-color: var(--color_principal);
+    z-index: 1;
+}
+.dark-mode .mrginput100_form .select2-container--open~.focus-input100 {
+    background: linear-gradient(to bottom, #ffffff00 60%, #272740 40%);
+}
+
+
+/*  cuando tiene lleno los campos */
+.mrginput100 input:not(:placeholder-shown)+.focus-input100 {
+    transform: translate(-10px, -10px);
+    margin: 0 0px 0 20px;
+    font-size: 12px;
+    background: linear-gradient(to bottom, #ffffff00 60%, #f1f1f9ed 40%);
+    z-index: 1;
+}
+
+.mrginput100_form input:not(:placeholder-shown)+.focus-input100 {
+    transform: translate(25px, -9px);
+    margin: 0 0px 0 20px;
+    font-size: 12px;
+    background: linear-gradient(to bottom, #ffffff00 60%, #f1f1f9ed 40%);
+    z-index: 3;
+}
+
+.mrginput100_form select:valid~.focus-input100 {
+    transform: translate(-10px, -10px);
+    margin: 0 0px 0 20px;
+    font-size: 12px;
+    background: linear-gradient(to bottom, #ffffff00 60%, #f1f1f9ed 40%);
+    z-index: 1;
+}
+
+
+textarea:focus,
+input:focus {
+    border-color: var(--color_principal) !important;
+}
