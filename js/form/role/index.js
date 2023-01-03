@@ -23,6 +23,7 @@ const load_datatable = () => {
                 className: "text-center"
             },
             { data: 'name' },
+            { data: 'abreviatura' },
             {
                 data: 'estado',
                 orderable: false,
