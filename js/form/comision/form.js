@@ -3,15 +3,15 @@ const text_icono = (e, obj, _key, _paht) => {
     set_icono(_key, valor, _paht)
 }
 
-form.register(_path_controller_indicador, {
+form.register(_path_controller_comision, {
     nuevo: function() {
-        get_modal(_path_controller_indicador,_prefix_indicador)
+        get_modal(_path_controller_comision,_prefix_comision)
     },
     editar: function(id) {
-        get_modal(_path_controller_indicador, _prefix_indicador, "edit", id)
+        get_modal(_path_controller_comision, _prefix_comision, "edit", id)
     },
     ver: function(id) {
-        get_modal(_path_controller_indicador, _prefix_indicador, "ver", id)
+        get_modal(_path_controller_comision, _prefix_comision, "ver", id)
         
     },
     aprobar: function(id){
@@ -21,9 +21,56 @@ form.register(_path_controller_indicador, {
 
         swal({ title: "Confirmar", text: "¿Desea " + accion__ + " el registro seleccionado?", type: "warning", showCancelButton: !0, confirmButtonText: "Confirmar", cancelButtonText: "Cancelar" }, function() {
             $.ajax({
-                url: route(_path_controller_indicador + '.aprobar'),
+                url: route(_path_controller_comision + '.aprobar'),
                 data: { id: id, accion: accion__ },
                 type: 'POST',
+                beforeSend: function() {
+                    //LOADING PAGE
+                },
+                success: function(response) {
+
+                    if(response.type == "error"){
+                        toastr.error(response.text)
+                        $self.callback(response)
+                        return init_btndelete()
+                    }
+                    
+                    toastr.success('Registro ' + textaccion__ + ' correctamente')
+                    $self.callback(response)
+                    init_btndelete()
+                },
+                complete: function() {
+                    //loading("complete");
+                },
+                error: function(e) {
+                    if (e.status == 422) { //Errores de Validacion
+                        $.each(e.responseJSON.errors, function(i, item) {
+                            if (i == 'referencias') {
+                                toastr.warning(item, 'Notificación comisiones')
+                            }
+
+                        });
+                    }
+                    if (e.status == 419) { //Errores de Sesión
+                        console.log(msj_sesion);
+                    } else if (e.status == 500) {
+                        console.log((e.responseJSON.message) ? msj_soporte : ' ');
+                    }
+                }
+            })
+        })
+    },
+    eliminar_restaurar: function(id, obj) {
+        var $self = this
+        let accion__ = obj.getAttribute('data-action')
+        let textaccion__ = (accion__.substring(0, 7)) + 'ado'
+
+        swal({ title: "Confirmar", text: "¿Desea " + accion__ + " el registro seleccionado?", type: "warning", showCancelButton: !0, confirmButtonText: "Confirmar", cancelButtonText: "Cancelar" }, function() {
+
+            $.ajax({
+                url: route(_path_controller_comision + '.destroy', 'delete'),
+                data: { id: id, accion: accion__ },
+                type: 'DELETE',
                 beforeSend: function() {
                     //LOADING PAGE
                 },
@@ -46,48 +93,7 @@ form.register(_path_controller_indicador, {
                     if (e.status == 422) { //Errores de Validacion
                         $.each(e.responseJSON.errors, function(i, item) {
                             if (i == 'referencias') {
-                                toastr.warning(item, 'Notificación Entidades')
-                            }
-
-                        });
-                    }
-                    if (e.status == 419) { //Errores de Sesión
-                        console.log(msj_sesion);
-                    } else if (e.status == 500) {
-                        console.log((e.responseJSON.message) ? msj_soporte : ' ');
-                    }
-                }
-            })
-        })
-    },
-    eliminar_restaurar: function(id, obj) {
-        var $self = this
-        let accion__ = obj.getAttribute('data-action')
-        let textaccion__ = (accion__.substring(0, 7)) + 'ado'
-
-        swal({ title: "Confirmar", text: "¿Desea " + accion__ + " el registro seleccionado?", type: "warning", showCancelButton: !0, confirmButtonText: "Confirmar", cancelButtonText: "Cancelar" }, function() {
-
-            $.ajax({
-                url: route(_path_controller_indicador + '.destroy', 'delete'),
-                data: { id: id, accion: accion__ },
-                type: 'DELETE',
-                beforeSend: function() {
-                    //loading();
-                },
-                success: function(response) {
-                    //return console.log(response)
-                    toastr.success('Registro ' + textaccion__ + ' correctamente', 'Notificación Procesos Nivel 0')
-                    $self.callback(response)
-                    init_btndelete()
-                },
-                complete: function() {
-                    //loading("complete");
-                },
-                error: function(e) {
-                    if (e.status == 422) { //Errores de Validacion
-                        $.each(e.responseJSON.errors, function(i, item) {
-                            if (i == 'referencias') {
-                                toastr.warning(item, 'Notificación Proceso Nivel Cero')
+                                toastr.warning(item, 'Notificación comisiones')
                             }
 
                         });
@@ -104,11 +110,11 @@ form.register(_path_controller_indicador, {
     },
     guardar: function() {
         var $self = this;
-        let _form = "#form-" + _path_controller_indicador
+        let _form = "#form-" + _path_controller_comision
         let post_data = $(_form).serialize()
 
         $.ajax({
-            url: route(_path_controller_indicador + '.store'),
+            url: route(_path_controller_comision + '.store'),
             type: 'POST',
             data: post_data,
             cache: false,
@@ -117,10 +123,15 @@ form.register(_path_controller_indicador, {
                 //loading();
             },
             success: function(response) {
-                //toastr.success('Datos grabados correctamente','Notificación '+_path_controller_indicador, {"timeOut":500000,"tapToDismiss": false})
-                toastr.success('Datos grabados correctamente', 'Notificación Procesos Nivel Cero')
+                if(response.type == "error"){
+                    toastr.error(response.text, '')
+                    $self.callback(response)
+                    return close_modal(_path_controller_comision)
+                }
+                //toastr.success('Datos grabados correctamente','Notificación '+_path_controller_comision, {"timeOut":500000,"tapToDismiss": false})
+                toastr.success('Datos grabados correctamente', '')
                 $self.callback(response)
-                close_modal(_path_controller_indicador)
+                close_modal(_path_controller_comision)
             },
             complete: function() {
                 //loading("complete");
@@ -129,15 +140,15 @@ form.register(_path_controller_indicador, {
 
                 //Msj($("#descripcion"), "Ingrese Descripcion ","","above",false)
                 if (e.status == 422) { //Errores de Validacion
-                    limpieza(_path_controller_indicador);
+                    limpieza(_path_controller_comision);
                     $.each(e.responseJSON.errors, function(i, item) {
-                        $('#' + i+"_"+_prefix_indicador).addClass('is_invalid');
-                        $('.' + i+"_"+_prefix_indicador).removeClass('d-none');
-                        $('.' + i+"_"+_prefix_indicador).attr('data-content', item);
-                        $('.' + i+"_"+_prefix_indicador).addClass('msj_error_exist');
+                        $('#' + i+"_"+_prefix_comision).addClass('is_invalid');
+                        $('.' + i+"_"+_prefix_comision).removeClass('d-none');
+                        $('.' + i+"_"+_prefix_comision).attr('data-content', item);
+                        $('.' + i+"_"+_prefix_comision).addClass('msj_error_exist');
 
                     });
-                    $("#form-" + _path_controller_indicador + " .msj_error_exist").first().popover('show');
+                    $("#form-" + _path_controller_comision + " .msj_error_exist").first().popover('show');
 
 
                 } else if (e.status == 419) {
@@ -150,6 +161,6 @@ form.register(_path_controller_indicador, {
 
     },
     callback: function(data) {
-        grilla.reload(_path_controller_indicador);
+        grilla.reload(_path_controller_comision);
     }
 });
