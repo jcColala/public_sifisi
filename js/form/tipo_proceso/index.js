@@ -25,23 +25,27 @@ const load_datatable = () => {
             {
                 data: 'descripcion',
                 orderable: false,
-                searchable: true
+                searchable: true,
             },
             {
                 data: 'codigo',
                 orderable: false,
-                searchable: true
+                searchable: true,
+                className: "text-center"
+
             },
             {
-                data: 'tipo_accion.descripcion',
+                data: 'estado',
                 orderable: false,
-                searchable: true
+                searchable: true,  
+                className: "text-center"
             },
             {
-                data: 'estado.descripcion',
+                data: 'activo',
                 orderable: false,
-                searchable: true
-            },
+                searchable: true, 
+                className: "text-center" 
+            }
 
         ],
         order: [
