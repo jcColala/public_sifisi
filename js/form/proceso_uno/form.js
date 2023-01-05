@@ -29,6 +29,12 @@ form.register(_path_controller_proceso_uno, {
                 },
                 success: function(response) {
                     //return console.log(response)
+                    if(response.idestado == 2){
+                        toastr.error("No se puede realizar la acción en un registro que no se encuentra en estado pendiente")
+                        $self.callback(response)
+                        return init_btndelete()
+                    }
+                    
                     if(response.type == "error"){
                         toastr.error(response.text)
                         $self.callback(response)
