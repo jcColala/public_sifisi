@@ -5,7 +5,7 @@ $(document).ready(function() {
 
 //------------------------------------------------------------- Datatable
 const load_datatable = () => {
-    table = $('#dt-' + _path_controller_proceso_dos).DataTable({
+    table = $('#dt-' + _path_controller_procedimiento).DataTable({
         pageLength: 10,
         processing: true,
         serverSide: true,
@@ -15,7 +15,7 @@ const load_datatable = () => {
         ordering: true,
         rowId: "id",
         bJQueryUI: true,
-        ajax: route(_path_controller_proceso_dos + ".grilla"),
+        ajax: route(_path_controller_procedimiento + ".grilla"),
         columns: [{
                 data: 'DT_RowIndex',
                 orderable: false,
@@ -29,6 +29,11 @@ const load_datatable = () => {
             },
             {
                 data: 'codigo',
+                orderable: false,
+                searchable: true
+            },
+            {
+                data: 'version',
                 orderable: false,
                 searchable: true
             },
@@ -52,7 +57,7 @@ const load_datatable = () => {
     });
 
     //-------------------------------------------------------- Horrores Datatable
-    $('#dt-' + _path_controller_proceso_dos).on('error.dt', function(e, settings, techNote, message) {
+    $('#dt-' + _path_controller_procedimiento).on('error.dt', function(e, settings, techNote, message) {
         console.log('error ajax: ', message);
     }).DataTable();
 }
@@ -60,10 +65,10 @@ const load_datatable = () => {
 //------------------------------------------------------- VER
 $("#btn-ver").on("click", function(e){
     e.preventDefault();
-    var id = grilla.get_id(_name_tabla_proceso_dos);
+    var id = grilla.get_id(_name_tabla_procedimiento);
 
     if (id != null) {
-        form.get(_path_controller_proceso_dos).ver(id, this);
+        form.get(_path_controller_procedimiento).ver(id, this);
     } else {
         alertas.warning("Ups..!");
     }
@@ -72,10 +77,10 @@ $("#btn-ver").on("click", function(e){
 //------------------------------------------------------- APROBAR
 $("#btn-aprobar").on("click", function(e){
     e.preventDefault();
-    var id = grilla.get_id(_name_tabla_proceso_dos);
+    var id = grilla.get_id(_name_tabla_procedimiento);
 
     if (id != null) {
-        form.get(_path_controller_proceso_dos).aprobar(id, this);
+        form.get(_path_controller_procedimiento).aprobar(id, this);
     } else {
         alertas.warning("Ups..!");
     }
@@ -85,16 +90,16 @@ $("#btn-aprobar").on("click", function(e){
 //------------------------------------------------------------- Nuevo
 $("#btn-create").on("click", function(e) {
     e.preventDefault();
-    form.get(_path_controller_proceso_dos).nuevo();
+    form.get(_path_controller_procedimiento).nuevo();
 });
 
 //------------------------------------------------------------- Editar
 $("#btn-edit").on("click", function(e) {
     e.preventDefault();
-    var id = grilla.get_id(_name_tabla_proceso_dos);
+    var id = grilla.get_id(_name_tabla_procedimiento);
 
     if (id != null) {
-        form.get(_path_controller_proceso_dos).editar(id);
+        form.get(_path_controller_procedimiento).editar(id);
     } else {
         alertas.warning("Ups..!");
     }
@@ -104,9 +109,9 @@ $("#btn-edit").on("click", function(e) {
 //------------------------------------------------------------- Eliminar
 $("#btn-destroy").on("click", function(e) {
     e.preventDefault();
-    var id = grilla.get_id(_name_tabla_proceso_dos);
+    var id = grilla.get_id(_name_tabla_procedimiento);
     if (id != null) {
-        form.get(_path_controller_proceso_dos).eliminar_restaurar(id, this);
+        form.get(_path_controller_procedimiento).eliminar_restaurar(id, this);
     } else {
         alertas.warning("Ups..!");
     }

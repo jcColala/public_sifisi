@@ -5,7 +5,7 @@ $(document).ready(function() {
 
 //------------------------------------------------------------- Datatable
 const load_datatable = () => {
-    table = $('#dt-' + _path_controller_proceso_uno).DataTable({
+    table = $('#dt-' + _path_controller_entidad).DataTable({
         pageLength: 10,
         processing: true,
         serverSide: true,
@@ -15,7 +15,7 @@ const load_datatable = () => {
         ordering: true,
         rowId: "id",
         bJQueryUI: true,
-        ajax: route(_path_controller_proceso_uno + ".grilla"),
+        ajax: route(_path_controller_entidad + ".grilla"),
         columns: [{
                 data: 'DT_RowIndex',
                 orderable: false,
@@ -24,26 +24,12 @@ const load_datatable = () => {
             },
             {
                 data: 'descripcion',
-                orderable: true,
+                orderable: false,
                 searchable: true,
-            },
-            {
-                data: 'codigo',
-                orderable: true,
-                searchable: true,
-                className: "text-center"
-
-            },
-            {
-                data: 'version',
-                orderable: true,
-                searchable: true,
-                className: "text-center"
-
             },
             {
                 data: 'estado',
-                orderable: true,
+                orderable: false,
                 searchable: true,  
                 className: "text-center"
             },
@@ -61,7 +47,7 @@ const load_datatable = () => {
     });
 
     //-------------------------------------------------------- Horrores Datatable
-    $('#dt-' + _path_controller_proceso_uno).on('error.dt', function(e, settings, techNote, message) {
+    $('#dt-' + _path_controller_entidad).on('error.dt', function(e, settings, techNote, message) {
         console.log('error ajax: ', message);
     }).DataTable();
 }
@@ -69,22 +55,23 @@ const load_datatable = () => {
 //------------------------------------------------------- VER
 $("#btn-ver").on("click", function(e){
     e.preventDefault();
-    var id = grilla.get_id(_name_tabla_proceso_uno);
+    var id = grilla.get_id(_name_tabla_entidad);
 
     if (id != null) {
-        form.get(_path_controller_proceso_uno).ver(id, this);
+        form.get(_path_controller_entidad).ver(id, this);
     } else {
         alertas.warning("Ups..!");
     }
 });
 
+
 //------------------------------------------------------- APROBAR
 $("#btn-aprobar").on("click", function(e){
     e.preventDefault();
-    var id = grilla.get_id(_name_tabla_proceso_uno);
+    var id = grilla.get_id(_name_tabla_entidad);
 
     if (id != null) {
-        form.get(_path_controller_proceso_uno).aprobar(id, this);
+        form.get(_path_controller_entidad).aprobar(id, this);
     } else {
         alertas.warning("Ups..!");
     }
@@ -94,16 +81,16 @@ $("#btn-aprobar").on("click", function(e){
 //------------------------------------------------------------- Nuevo
 $("#btn-create").on("click", function(e) {
     e.preventDefault();
-    form.get(_path_controller_proceso_uno).nuevo();
+    form.get(_path_controller_entidad).nuevo();
 });
 
 //------------------------------------------------------------- Editar
 $("#btn-edit").on("click", function(e) {
     e.preventDefault();
-    var id = grilla.get_id(_name_tabla_proceso_uno);
+    var id = grilla.get_id(_name_tabla_entidad);
 
     if (id != null) {
-        form.get(_path_controller_proceso_uno).editar(id);
+        form.get(_path_controller_entidad).editar(id);
     } else {
         alertas.warning("Ups..!");
     }
@@ -113,9 +100,9 @@ $("#btn-edit").on("click", function(e) {
 //------------------------------------------------------------- Eliminar
 $("#btn-destroy").on("click", function(e) {
     e.preventDefault();
-    var id = grilla.get_id(_name_tabla_proceso_uno);
+    var id = grilla.get_id(_name_tabla_entidad);
     if (id != null) {
-        form.get(_path_controller_proceso_uno).eliminar_restaurar(id, this);
+        form.get(_path_controller_entidad).eliminar_restaurar(id, this);
     } else {
         alertas.warning("Ups..!");
     }

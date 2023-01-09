@@ -3,15 +3,15 @@ const text_icono = (e, obj, _key, _paht) => {
     set_icono(_key, valor, _paht)
 }
 
-form.register(_path_controller_proceso_uno, {
+form.register(_path_controller_tipo_entidad, {
     nuevo: function() {
-        get_modal(_path_controller_proceso_uno,_prefix_proceso_uno)
+        get_modal(_path_controller_tipo_entidad,_prefix_tipo_entidad)
     },
     editar: function(id) {
-        get_modal(_path_controller_proceso_uno, _prefix_proceso_uno, "edit", id)
+        get_modal(_path_controller_tipo_entidad, _prefix_tipo_entidad, "edit", id)
     },
     ver: function(id) {
-        get_modal(_path_controller_proceso_uno, _prefix_proceso_uno, "ver", id)
+        get_modal(_path_controller_tipo_entidad, _prefix_tipo_entidad, "ver", id)
         
     },
     aprobar: function(id){
@@ -21,7 +21,7 @@ form.register(_path_controller_proceso_uno, {
 
         swal({ title: "Confirmar", text: "¿Desea " + accion__ + " el registro seleccionado?", type: "warning", showCancelButton: !0, confirmButtonText: "Confirmar", cancelButtonText: "Cancelar" }, function() {
             $.ajax({
-                url: route(_path_controller_proceso_uno + '.aprobar'),
+                url: route(_path_controller_tipo_entidad + '.aprobar'),
                 data: { id: id, accion: accion__ },
                 type: 'POST',
                 beforeSend: function() {
@@ -34,7 +34,6 @@ form.register(_path_controller_proceso_uno, {
                         $self.callback(response)
                         return init_btndelete()
                     }
-                    
                     if(response.type == "error"){
                         toastr.error(response.text)
                         $self.callback(response)
@@ -66,6 +65,7 @@ form.register(_path_controller_proceso_uno, {
             })
         })
     },
+
     eliminar_restaurar: function(id, obj) {
         var $self = this
         let accion__ = obj.getAttribute('data-action')
@@ -74,13 +74,20 @@ form.register(_path_controller_proceso_uno, {
         swal({ title: "Confirmar", text: "¿Desea " + accion__ + " el registro seleccionado?", type: "warning", showCancelButton: !0, confirmButtonText: "Confirmar", cancelButtonText: "Cancelar" }, function() {
 
             $.ajax({
-                url: route(_path_controller_proceso_uno + '.destroy', 'delete'),
+                url: route(_path_controller_tipo_entidad + '.destroy', 'delete'),
                 data: { id: id, accion: accion__ },
                 type: 'DELETE',
                 beforeSend: function() {
-                    //loading();
+                    //LOADING PAGE
                 },
                 success: function(response) {
+                    //return console.log(response)
+                    if(response.type == "error"){
+                        toastr.error(response.text)
+                        $self.callback(response)
+                        return init_btndelete()
+                    }
+                    
                     toastr.success('Registro ' + textaccion__ + ' correctamente', 'Notificación Procesos Nivel Cero')
                     $self.callback(response)
                     init_btndelete()
@@ -92,7 +99,7 @@ form.register(_path_controller_proceso_uno, {
                     if (e.status == 422) { //Errores de Validacion
                         $.each(e.responseJSON.errors, function(i, item) {
                             if (i == 'referencias') {
-                                toastr.warning(item, 'Notificación Procesos Nivel Cero')
+                                toastr.warning(item, 'Notificación tipo_entidades')
                             }
 
                         });
@@ -109,100 +116,28 @@ form.register(_path_controller_proceso_uno, {
     },
     guardar: function() {
         var $self = this;
-        let _form = "#form-" + _path_controller_proceso_uno
-        
-        var formData = new FormData();
-        formData.append('id', $('#id_').val());
-        formData.append('idpersona_solicita', $('#idpersona_solicita_').val());
-        formData.append('idproceso_cero', $('#idproceso_cero_').val());
-        formData.append('codigo', $('#codigo_hidde_').val());
-        formData.append('descripcion', $('#descripcion_').val());
-        formData.append('version', $('#version_').val());
-        formData.append('fecha_aprobado', $('#fecha_aprobado_').val());
-        //formData.append('diagrama', $('#diagrama_')[0].files[0]);
-        //formData.append('documento', $('#documento_')[0].files[0]);
-
-        /* ---------ID INDICADOR */
-            var id_indicador = new Array();
-            $("input[name='id_indicador']").each(function(){
-              id_indicador.push($(this).val())
-            });
-
-            for (var i = 0; i < id_indicador.length; i++) {
-                formData.append('id_indicador['+i+']', id_indicador[i]);
-            }
-
-        /* ---------CODIGO INDICADOR */
-            var codigo_indicador = new Array();
-            $("input[name='codigo_indicador']").each(function(){
-              codigo_indicador.push($(this).val())
-            });
-
-            for (var i = 0; i < codigo_indicador.length; i++) {
-                formData.append('codigo_indicador['+i+']', codigo_indicador[i]);
-            }
-
-        /* ---------DESCRIPCION INDICADOR */
-            var descripcion_indicador = new Array();
-            $("input[name='descripcion_indicador']").each(function(){
-              descripcion_indicador.push($(this).val())
-            });
-
-            for (var i = 0; i < descripcion_indicador.length; i++) {
-                formData.append('descripcion_indicador['+i+']', descripcion_indicador[i]);
-            }
-
-        /* ---------ID PROCEDIMIENTO */
-            var id_procedimiento = new Array();
-            $("input[name='id_procedimiento']").each(function(){
-              id_procedimiento.push($(this).val())
-            });
-
-            for (var i = 0; i < id_procedimiento.length; i++) {
-                formData.append('id_procedimiento['+i+']', id_procedimiento[i]);
-            }
-
-        /* ---------CODIGO PROCEDIMIENTO */
-            var codigo_procedimiento = new Array();
-            $("input[name='codigo_procedimiento']").each(function(){
-              codigo_procedimiento.push($(this).val())
-            });
-
-            for (var i = 0; i < codigo_procedimiento.length; i++) {
-                formData.append('codigo_procedimiento['+i+']', codigo_procedimiento[i]);
-            }
-
-        /* ---------DESCRIPCION PROCEDIMIENTO */
-            var descripcion_procedimiento = new Array();
-            $("input[name='descripcion_procedimiento']").each(function(){
-              descripcion_procedimiento.push($(this).val())
-            });
-
-            for (var i = 0; i < descripcion_procedimiento.length; i++) {
-                formData.append('descripcion_procedimiento['+i+']', descripcion_procedimiento[i]);
-            }
+        let _form = "#form-" + _path_controller_tipo_entidad
+        let post_data = $(_form).serialize()
 
         $.ajax({
-            url: route(_path_controller_proceso_uno + '.store'),
+            url: route(_path_controller_tipo_entidad + '.store'),
             type: 'POST',
-            data: formData,
+            data: post_data,
             cache: false,
-            contentType: false,
             processData: false,
-
             beforeSend: function() {
                 //loading();
             },
             success: function(response) {
                 if(response.type == "error"){
-                    toastr.error(response.text)
+                    toastr.error(response.text, '')
                     $self.callback(response)
-                    return close_modal(_path_controller_proceso_cero)
+                    return close_modal(_path_controller_tipo_entidad)
                 }
-                //toastr.success('Datos grabados correctamente','Notificación '+_path_controller_proceso_uno, {"timeOut":500000,"tapToDismiss": false})
-                toastr.success('Datos grabados correctamente', 'Notificación Procesos Nivel Cero')
+                //toastr.success('Datos grabados correctamente','Notificación '+_path_controller_tipo_entidad, {"timeOut":500000,"tapToDismiss": false})
+                toastr.success('Datos grabados correctamente', '')
                 $self.callback(response)
-                close_modal(_path_controller_proceso_uno)
+                close_modal(_path_controller_tipo_entidad)
             },
             complete: function() {
                 //loading("complete");
@@ -211,15 +146,15 @@ form.register(_path_controller_proceso_uno, {
 
                 //Msj($("#descripcion"), "Ingrese Descripcion ","","above",false)
                 if (e.status == 422) { //Errores de Validacion
-                    limpieza(_path_controller_proceso_uno);
+                    limpieza(_path_controller_tipo_entidad);
                     $.each(e.responseJSON.errors, function(i, item) {
-                        $('#' + i+"_"+_prefix_proceso_uno).addClass('is_invalid');
-                        $('.' + i+"_"+_prefix_proceso_uno).removeClass('d-none');
-                        $('.' + i+"_"+_prefix_proceso_uno).attr('data-content', item);
-                        $('.' + i+"_"+_prefix_proceso_uno).addClass('msj_error_exist');
+                        $('#' + i+"_"+_prefix_tipo_entidad).addClass('is_invalid');
+                        $('.' + i+"_"+_prefix_tipo_entidad).removeClass('d-none');
+                        $('.' + i+"_"+_prefix_tipo_entidad).attr('data-content', item);
+                        $('.' + i+"_"+_prefix_tipo_entidad).addClass('msj_error_exist');
 
                     });
-                    $("#form-" + _path_controller_proceso_uno + " .msj_error_exist").first().popover('show');
+                    $("#form-" + _path_controller_tipo_entidad + " .msj_error_exist").first().popover('show');
 
 
                 } else if (e.status == 419) {
@@ -232,6 +167,6 @@ form.register(_path_controller_proceso_uno, {
 
     },
     callback: function(data) {
-        grilla.reload(_path_controller_proceso_uno);
+        grilla.reload(_path_controller_tipo_entidad);
     }
 });
