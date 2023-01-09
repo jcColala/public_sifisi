@@ -335,3 +335,36 @@ table.dataTable tbody tr.selected {
   font-size: 14px;
   color: var(--color_principal);
 }
+
+/*--------------------------------------------------------- Tabs*/
+.modal_bodytabs .tab-menu-heading{
+    padding: 0px;
+    border: 0;
+}
+.modal_bodytabs .tabs-menu-body{
+    border: 0;
+    padding: 0px;
+    padding-top: 5px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.modal_bodytabs .tabs-menu ul li .active{
+    background: #d6d2fb;
+    border: 1px solid #d6d2fb;
+    color: #5e2dd8;
+    box-shadow:0 5px 10px -3px rgb(94 45 216 / 30%);
+    border-radius: 4px;
+}
+.modal_bodytabs .tabs-menu ul li a{
+    padding: 8px 18px 8px;
+    color: #5e2dd8;
+}
+/*--------------------------------------------------------- Checkbox*/
+.table_checkbox{
+    margin: 0;
+    margin-left: 20px;
+    padding-right: 20px;
+}
+.table_checkbox .custom-control-label{
+    vertical-align:  sub;
+}
