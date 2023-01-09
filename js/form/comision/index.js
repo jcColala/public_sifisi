@@ -23,20 +23,35 @@ const load_datatable = () => {
                 className: "text-center"
             },
             {
+                data: 'idcreador',
+                orderable: true,
+                searchable: true
+            },
+            {
                 data: 'descripcion',
                 orderable: true,
                 searchable: true
             },
             {
-                data: 'tipo_accion.descripcion',
+                data: 'resolucion',
                 orderable: true,
                 searchable: true
             },
             {
-                data: 'estado.descripcion',
+                data: 'fecha_inicio',
                 orderable: true,
                 searchable: true
             },
+            {
+                data: 'fecha_fin',
+                orderable: true,
+                searchable: true
+            },
+            {
+                data: 'estado',
+                orderable: true,
+                searchable: true
+            }
 
         ],
         order: [
@@ -49,30 +64,6 @@ const load_datatable = () => {
         console.log('error ajax: ', message);
     }).DataTable();
 }
-
-//------------------------------------------------------- VER
-$("#btn-ver").on("click", function(e){
-    e.preventDefault();
-    var id = grilla.get_id(_name_tabla_comision);
-
-    if (id != null) {
-        form.get(_path_controller_comision).ver(id, this);
-    } else {
-        alertas.warning("Ups..!");
-    }
-});
-
-//----------------------------------------------------------APROBAR
-$("#btn-aprobar").on("click", function(e){
-    e.preventDefault();
-    var id = grilla.get_id(_name_tabla_comision);
-
-    if (id != null) {
-        form.get(_path_controller_comision).aprobar(id, this);
-    } else {
-        alertas.warning("Ups..!");
-    }
-});
 
 //------------------------------------------------------------- Nuevo
 $("#btn-create").on("click", function(e) {
@@ -91,7 +82,6 @@ $("#btn-edit").on("click", function(e) {
         alertas.warning("Ups..!");
     }
 });
-
 
 //------------------------------------------------------------- Eliminar
 $("#btn-destroy").on("click", function(e) {

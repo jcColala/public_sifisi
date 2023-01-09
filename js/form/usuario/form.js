@@ -57,7 +57,6 @@ $(document).on("click", "#cancelar_" + _prefix_usuario, function(e) {
 })
 
 //------------------------------------------------------------- Autocomplete
-
 if ($("#autocomplete").length) {
     new Autocomplete('#autocomplete', {
 

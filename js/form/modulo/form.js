@@ -77,7 +77,7 @@ form.register(_path_controller_modulo, {
                     limpieza(_path_controller_modulo);
                     $.each(e.responseJSON.errors, function(i, item) {
                         if (i == 'required_accesos')
-                            return toastr.warning('Error al elliminar funciones , primero es necesario quitar los accesos', 'Notificación módulo')
+                            return toastr.warning('Error al eliminar funciones , primero es necesario quitar los accesos', 'Notificación módulo')
 
                         $('#' + i + "_" + _prefix_modulo).addClass('is_invalid');
                         $('.select2-' + i + "_" + _prefix_modulo).addClass('select2-is_invalid');
