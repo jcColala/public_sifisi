@@ -35,6 +35,12 @@ const load_datatable = () => {
 
             },
             {
+                data: 'tipo_proceso.descripcion',
+                orderable: true,
+                searchable:true,
+                className: "text-center"
+            },
+            {
                 data: 'estado',
                 orderable: false,
                 searchable: true,  

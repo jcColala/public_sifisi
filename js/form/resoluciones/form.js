@@ -110,12 +110,64 @@ form.register(_path_controller_resoluciones, {
     guardar: function() {
         var $self = this;
         let _form = "#form-" + _path_controller_resoluciones
-        var formData = new FormData();
+                var formData = new FormData();
         formData.append('id', $('#id_').val());
         formData.append('idpersona_solicita', $('#idpersona_solicita_').val());
-        formData.append('codigo', $('#codigo_').val());
         formData.append('descripcion', $('#descripcion_').val());
-        formData.append('archivo', $('#archivo_')[0].files[0]);
+        formData.append('fecha_aprobado', $('#fecha_aprobado_').val());
+        //formData.append('diagrama', $('#diagrama_')[0].files[0]);
+        //formData.append('documento', $('#documento_')[0].files[0]);
+
+        /* ---------ID DOCUMENTO */
+            var id_indicador = new Array();
+            $("input[name='id_indicador']").each(function(){
+              id_indicador.push($(this).val())
+            });
+
+            for (var i = 0; i < id_indicador.length; i++) {
+                formData.append('id_indicador['+i+']', id_indicador[i]);
+            }
+
+        /* ---------CODIGO DOCUMENTO */
+            var codigo_documento = new Array();
+            $("input[name='codigo_documento']").each(function(){
+              codigo_documento.push($(this).val())
+            });
+
+            for (var i = 0; i < codigo_documento.length; i++) {
+                formData.append('codigo_documento['+i+']', codigo_documento[i]);
+            }
+
+        /* ---------DESCRIPCION DOCUMENTO */
+            var descripcion_documento = new Array();
+            $("input[name='descripcion_documento']").each(function(){
+              descripcion_documento.push($(this).val())
+            });
+
+            for (var i = 0; i < descripcion_documento.length; i++) {
+                formData.append('descripcion_documento['+i+']', descripcion_documento[i]);
+            }
+
+        /* ---------VERSION DOCUMENTO */
+            var version_documento = new Array();
+            $("input[name='version_documento']").each(function(){
+              version_documento.push($(this).val())
+            });
+
+            for (var i = 0; i < version_documento.length; i++) {
+                formData.append('version_documento['+i+']', version_documento[i]);
+            }
+
+        /* ---------ARCHIVO DOCUMENTO 
+            var archivo_documento = new Array();
+            $("input[name='archivo_documento']").each(function(){
+              archivo_documento.push($(this).val())
+            });
+
+            for (var i = 0; i < archivo_documento.length; i++) {
+                formData.append('archivo_documento['+i+']', archivo_documento[i]);
+            }*/
+
         $.ajax({
             url: route(_path_controller_resoluciones + '.store'),
             type: 'POST',

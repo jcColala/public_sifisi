@@ -23,11 +23,6 @@ const load_datatable = () => {
                 className: "text-center"
             },
             {
-                data: 'codigo',
-                orderable: true,
-                searchable: true
-            },
-            {
                 data: 'descripcion',
                 orderable: false,
                 searchable: true

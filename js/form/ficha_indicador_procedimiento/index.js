@@ -1,7 +1,6 @@
 //------------------------------------------------------------- Cargar al Inicio
 $(document).ready(function() {
     load_datatable();
-    console.log(route(_path_controller_ficha_indicador_procedimiento + ".grilla"))
 });
 
 //------------------------------------------------------------- Datatable
@@ -24,12 +23,12 @@ const load_datatable = () => {
                 className: "text-center"
             },
             {
-                data: 'codigo',
+                data: 'indicador_procedimiento.codigo',
                 orderable: false,
                 searchable: true
             },
             {
-                data: 'descripcion',
+                data: 'indicador_procedimiento.descripcion',
                 orderable: true,
                 searchable: true
             },
@@ -39,18 +38,17 @@ const load_datatable = () => {
                 searchable: true,
             },
             {
-                data: 'tipo_accion.descripcion',
-                orderable: true,
-                searchable: true,
+                data: 'estado',
+                orderable: false,
+                searchable: true,  
                 className: "text-center"
             },
             {
-                data: 'estado.descripcion',
+                data: 'activo',
                 orderable: false,
-                searchable: true,
-                className: "text-center"
-            },
-
+                searchable: true, 
+                className: "text-center" 
+            }
         ],
         order: [
             [1, 'ASC']
