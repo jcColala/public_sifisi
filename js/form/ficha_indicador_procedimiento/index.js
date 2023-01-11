@@ -38,6 +38,16 @@ const load_datatable = () => {
                 searchable: true,
             },
             {
+                data: 'resultado',
+                orderable: false,
+                searchable: true,
+            },
+            {
+                data: 'porcentaje',
+                orderable: false,
+                searchable: true,
+            },
+            {
                 data: 'estado',
                 orderable: false,
                 searchable: true,  
